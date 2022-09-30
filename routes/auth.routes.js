@@ -34,13 +34,19 @@ router.get("/session", (req, res) => {
     });
 });
 
+//...api/auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+  const { username,email, password } = req.body;
 
   if (!username) {
     return res
       .status(400)
       .json({ errorMessage: "Please provide your username." });
+  }
+  if (!email) {
+    return res
+      .status(400)
+      .json({ errorMessage: "Please provide your email." });
   }
 
   if (password.length < 8) {
@@ -76,6 +82,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         // Create a user and save it in the database
         return User.create({
           username,
+          email,
           password: hashedPassword,
         });
       })
@@ -84,6 +91,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
           user: user._id,
           createdAt: Date.now(),
         }).then((session) => {
+          //ENVIAR MAIL DE CONFIRMACION
           res.status(201).json({ user, accessToken: session._id });
         });
       })
@@ -124,13 +132,13 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
-        return res.status(400).json({ errorMessage: "Wrong credentials." });
+        return res.status(400).json({ errorMessage: "Wrong username, try again." });
       }
 
       // If user is found based on the username, check if the in putted password matches the one saved in the database
       bcrypt.compare(password, user.password).then((isSamePassword) => {
         if (!isSamePassword) {
-          return res.status(400).json({ errorMessage: "Wrong credentials." });
+          return res.status(400).json({ errorMessage: "Oops! Wrong password, try again." });
         }
         Session.create({ user: user._id, createdAt: Date.now() }).then(
           (session) => {
