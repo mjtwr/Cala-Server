@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const Project = require("../models/Project.model");
 const User = require("../models/User.model");
 const Session = require("../models/Session.model");
+const Backlog = require('../models/Backlog.model')
 
 //MIDDLEWARE
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const Tasks = require("../models/Tasks.model");
 
 //TODO: middleware, userid by params, errors
 
@@ -59,6 +61,19 @@ router.delete("/:id", (req, res) => {
         return res.status(404).json({ errorMessage: "Not Found" });
       }
       res.json(result);
+    })
+    .catch((error) => {
+      return res.status(500).json({ errorMessage: error.message });
+    });
+});
+
+//BACKLOG
+//GET LIST OF TASKS
+router.get("/:id/backlog", (req, res) => {
+  let id = req.params.id;
+  Backlog.find(req.params.id)
+    .then((backlog) => {
+      res.json(backlog.tasks);
     })
     .catch((error) => {
       return res.status(500).json({ errorMessage: error.message });
