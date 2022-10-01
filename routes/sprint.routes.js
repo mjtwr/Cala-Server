@@ -11,7 +11,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const Tasks = require("../models/Tasks.model");
 
 //CREATE SPRINT
-router.post("/", (req, res) => {
+router.post("/", isLoggedIn, (req, res) => {
   Sprint.create(req.body)
     .then((sprint) => {
       res.json(sprint);
@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
 });
 
 //READ LIST OF SPRINTS
-router.get("/", (req, res) => {
+router.get("/",isLoggedIn, (req, res) => {
   let id = "633765168bb3db7d110b585d";
   Sprint.find({ user: id })
     .then((sprint) => {
@@ -37,7 +37,7 @@ router.get("/", (req, res) => {
 });
 
 //UPDATE SPRINT
-router.put("/:id", (req, res) => {
+router.put("/:id", isLoggedIn,(req, res) => {
   Sprint.findByIdAndUpdate(req.params.id, req.body)
     .then((sprint) => {
       if (sprint == null) {
@@ -51,7 +51,7 @@ router.put("/:id", (req, res) => {
 });
 
 //DELETE SPRINT
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',isLoggedIn,(req,res)=>{
     Sprint.findByIdAndDelete(req.params.id)
     .then((sprint)=>{
         if( sprint === null){

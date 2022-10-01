@@ -14,7 +14,7 @@ const { populate } = require("../models/Project.model");
 //TODO: middleware, userid by params, errors
 
 //CREATE A PROJECT
-router.post("/", (req, res) => {
+router.post("/", isLoggedIn, (req, res) => {
   Project.create(req.body)
     .then((project) => {
       Backlog.create({ project: project._id })
@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
 });
 
 //READ LIST OF PROJECTS
-router.get("/", (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
   let id = "633766058adf8bd67f0538be";
   Project.find({ user: id })
     .then((result) => {
@@ -48,7 +48,7 @@ router.get("/", (req, res) => {
 
 // UPDATE PROJECT
 //Doesnt send err when mas length of title & description is overrided
-router.put("/:id", (req, res) => {
+router.put("/:id",  isLoggedIn,(req, res) => {
   Project.findByIdAndUpdate(req.params.id, req.body)
     .then((result) => {
       if (result == null) {
@@ -62,7 +62,7 @@ router.put("/:id", (req, res) => {
 });
 
 //DELETE PROJECT
-router.delete("/:id", (req, res) => {
+router.delete("/:id", isLoggedIn, (req, res) => {
   Project.findByIdAndDelete(req.params.id)
     .then((result) => {
       if (result === null) {
@@ -77,7 +77,7 @@ router.delete("/:id", (req, res) => {
 
 //BACKLOG
 //GET LIST OF TASKS
-router.get("/:id/backlogs", (req, res) => {
+router.get("/:id/backlogs",  isLoggedIn,(req, res) => {
   let id = req.params.id;
   console.log("IDDD", id);
   Backlog.find({ project: id })

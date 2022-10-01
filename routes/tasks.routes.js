@@ -12,7 +12,7 @@ const { route } = require("./projects.routes");
 //TODO: middleware, userid by params, errors
 
 //CREATE A TASK
-router.post("/", (req, res) => {
+router.post("/", isLoggedIn, (req, res) => {
   Tasks.create(req.body)
     .then((task) => {
       res.json(task);
@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
 });
 
 //READ LIST OF TASKS
-router.get("/", (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
   let id = "633766058adf8bd67f0538be";
   Tasks.find({ user: id })
     .then((tasks) => {
@@ -38,7 +38,7 @@ router.get("/", (req, res) => {
 });
 
 //UPDATE TASK
-router.put("/:id", (req, res) => {
+router.put("/:id", isLoggedIn, (req, res) => {
   Tasks.findByIdAndUpdate(req.params.id, req.body)
     .then((task) => {
       if (task === null) {
@@ -52,7 +52,7 @@ router.put("/:id", (req, res) => {
 });
 
 //DELETE TASK
-router.delete("/:id", (req, res) => {
+router.delete("/:id", isLoggedIn, (req, res) => {
   Tasks.findByIdAndDelete(req.params.id)
     .then((task) => {
       if (task === null) {
