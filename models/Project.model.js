@@ -11,7 +11,7 @@ const ProjectSchema = new Schema(
     description: {
         type: String,
         required: true,
-        maxLength: 10
+        maxLength: 50
       },
     user: {
       type: Schema.Types.ObjectId,

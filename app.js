@@ -22,6 +22,9 @@ app.use("/api", allRoutes);
 //REGISTER ROUTES
 const projects = require('./routes/projects.routes')
 app.use('/projects', projects)
+
+const tasks = require('./routes/tasks.routes')
+app.use('/tasks', tasks)
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
