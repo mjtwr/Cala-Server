@@ -8,27 +8,14 @@ const Session = require("../models/Session.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const { route } = require("./projects.routes");
+const Backlog = require("../models/Backlog.model");
 
 //TODO: userid by params, errors
 
-//CREATE A TASK
-router.post("/", isLoggedIn, (req, res) => {
-  Tasks.create(req.body)
-    .then((task) => {
-      res.json(task);
-    })
-    .catch((error) => {
-      if (error instanceof mongoose.Error.ValidationError) {
-        return res.status(400).json({ errorMessage: error });
-      }
-      return res.status(500).json({ errorMessage: error.message });
-    });
-});
 
 //READ LIST OF TASKS
 router.get("/", isLoggedIn, (req, res) => {
-  let id = "633766058adf8bd67f0538be";
-  Tasks.find({ user: id })
+  Tasks.find(req.user._id)
     .then((tasks) => {
       res.json(tasks);
     })

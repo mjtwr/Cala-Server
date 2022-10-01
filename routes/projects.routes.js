@@ -1,17 +1,12 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const Project = require("../models/Project.model");
-const User = require("../models/User.model");
-const Session = require("../models/Session.model");
 const Backlog = require("../models/Backlog.model");
 
 //MIDDLEWARE
-const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-const Tasks = require("../models/Tasks.model");
-const { populate } = require("../models/Project.model");
 
-//TODO:  userid by params, errors
+//TODO:  errors
 
 //CREATE A PROJECT
 router.post("/", isLoggedIn, (req, res) => {
@@ -76,13 +71,13 @@ router.delete("/:id", isLoggedIn, (req, res) => {
 });
 
 //BACKLOG
-//GET LIST OF TASKS
+//GET BACKLOG AND ITS TASKS
 router.get("/:id/backlogs", isLoggedIn, (req, res) => {
   let id = req.params.id;
   Backlog.find({ project: id })
     // .populate("tasks")
     .then((backlog) => {
-      console.log("BACKLOG", backlog);
+      // console.log("BACKLOG", backlog);
       res.json(backlog.tasks);
     })
     .catch((error) => {

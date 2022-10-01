@@ -6,12 +6,12 @@ const Session = require("../models/Session.model");
 const Sprint = require("../models/Sprint.model");
 
 //MIDDLEWARE
-const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const Tasks = require("../models/Tasks.model");
 
 //CREATE SPRINT
 router.post("/", isLoggedIn, (req, res) => {
+  req.body.user = req.user._id;
   Sprint.create(req.body)
     .then((sprint) => {
       res.json(sprint);
@@ -26,8 +26,7 @@ router.post("/", isLoggedIn, (req, res) => {
 
 //READ LIST OF SPRINTS
 router.get("/", isLoggedIn, (req, res) => {
-  let id = "633765168bb3db7d110b585d";
-  Sprint.find({ user: id })
+  Sprint.find({ user: req.user._id })
     .then((sprint) => {
       res.json(sprint);
     })
