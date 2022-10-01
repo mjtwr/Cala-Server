@@ -9,7 +9,7 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const { route } = require("./projects.routes");
 
-//TODO: middleware, userid by params, errors
+//TODO: , userid by params, errors
 
 //CREATE A TASK
 router.post("/", isLoggedIn, (req, res) => {

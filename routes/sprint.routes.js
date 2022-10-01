@@ -25,7 +25,7 @@ router.post("/", isLoggedIn, (req, res) => {
 });
 
 //READ LIST OF SPRINTS
-router.get("/",isLoggedIn, (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
   let id = "633765168bb3db7d110b585d";
   Sprint.find({ user: id })
     .then((sprint) => {
@@ -37,7 +37,7 @@ router.get("/",isLoggedIn, (req, res) => {
 });
 
 //UPDATE SPRINT
-router.put("/:id", isLoggedIn,(req, res) => {
+router.put("/:id", isLoggedIn, (req, res) => {
   Sprint.findByIdAndUpdate(req.params.id, req.body)
     .then((sprint) => {
       if (sprint == null) {
@@ -51,16 +51,17 @@ router.put("/:id", isLoggedIn,(req, res) => {
 });
 
 //DELETE SPRINT
-router.delete('/:id',isLoggedIn,(req,res)=>{
-    Sprint.findByIdAndDelete(req.params.id)
-    .then((sprint)=>{
-        if( sprint === null){
-            return res.status(404).json({ errorMessage: "Project Not Found" });
+router.delete("/:id", isLoggedIn, (req, res) => {
+  Sprint.findByIdAndDelete(req.params.id)
+    .then((sprint) => {
+      if (sprint === null) {
+        return res.status(404).json({ errorMessage: "Project Not Found" });
       }
-        res.json(sprint)
-    }).catch((error) => {
-        return res.status(500).json({ errorMessage: error.message });
-      });
-})
+      res.json(sprint);
+    })
+    .catch((error) => {
+      return res.status(500).json({ errorMessage: error.message });
+    });
+});
 
 module.exports = router;
