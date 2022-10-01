@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Project = require("../models/Project.model");
 const User = require("../models/User.model");
 const Session = require("../models/Session.model");
-const Backlog = require('../models/Backlog.model')
+// const Backlog = require('../models/Backlog.model')
 
 //MIDDLEWARE
 const isLoggedOut = require("../middleware/isLoggedOut");
@@ -69,15 +69,15 @@ router.delete("/:id", (req, res) => {
 
 //BACKLOG
 //GET LIST OF TASKS
-router.get("/:id/backlog", (req, res) => {
-  let id = req.params.id;
-  Backlog.find(req.params.id)
-    .then((backlog) => {
-      res.json(backlog.tasks);
-    })
-    .catch((error) => {
-      return res.status(500).json({ errorMessage: error.message });
-    });
-});
+// router.get("/:id/backlog", (req, res) => {
+//   let id = req.params.id;
+//   Backlog.find(req.params.id)
+//     .then((backlog) => {
+//       res.json(backlog.tasks);
+//     })
+//     .catch((error) => {
+//       return res.status(500).json({ errorMessage: error.message });
+//     });
+// });
 
 module.exports = router;

@@ -20,15 +20,14 @@ const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
 
 //ROUTES
-const projects = require('./routes/projects.routes')
-app.use('/projects', projects)
+const projects = require("./routes/projects.routes");
+app.use("/projects", projects);
 
-const tasks = require('./routes/tasks.routes')
-app.use('/tasks', tasks)
+const tasks = require("./routes/tasks.routes");
+app.use("/tasks", tasks);
 
-const sprints = require('./routes/sprints.routes')
-app.use('/sprints', sprints)
-
+const sprints = require("./routes/sprint.routes");
+app.use("/sprints", sprints);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
