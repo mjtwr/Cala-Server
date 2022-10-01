@@ -7,7 +7,7 @@ const BacklogSchema = new Schema({
         ref: 'Project'
     }],
     tasks:[{
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Tasks'
     }]
 },{
