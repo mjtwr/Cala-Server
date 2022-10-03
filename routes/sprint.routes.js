@@ -26,9 +26,12 @@ router.post("/", isLoggedIn, (req, res) => {
 
 //READ LIST OF SPRINTS
 router.get("/", isLoggedIn, (req, res) => {
-  Sprint.find({ user: req.user._id })
-    .then((sprint) => {
-      res.json(sprint);
+  console.log(req.query)
+  Sprint.find({ project: req.query.projectId })
+  .populate('tasks')
+    .then((sprints) => {
+      // console.log('SPRINTS',sprints)
+      res.json({sprints : sprints});
     })
     .catch((error) => {
       return res.status(500).json({ errorMessage: error.message });
@@ -61,6 +64,21 @@ router.delete("/:id", isLoggedIn, (req, res) => {
     .catch((error) => {
       return res.status(500).json({ errorMessage: error.message });
     });
+});
+
+//ADD TASKS FROM BACKLOG TO SPRINT
+router.put("/:id/tasks", (req, res) => {
+  Tasks.findById(req.body.taskId)
+  .then((task)=>{
+  Sprint.findByIdAndUpdate(req.params.id, { $push: { tasks: task } })
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch((error) => {
+      return res.status(500).json({ errorMessage: error.message });
+    });
+  })
 });
 
 module.exports = router;

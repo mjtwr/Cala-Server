@@ -70,15 +70,14 @@ router.delete("/:id", isLoggedIn, (req, res) => {
     });
 });
 
-//BACKLOG
 //GET BACKLOG AND ITS TASKS
 router.get("/:id/backlogs", isLoggedIn, (req, res) => {
   let id = req.params.id;
   Backlog.find({ project: id })
-    // .populate("tasks")
+    .populate("tasks")
     .then((backlog) => {
-      // console.log("BACKLOG", backlog);
-      res.json(backlog.tasks);
+      console.log("BACKLOG", backlog);
+      res.json(backlog[0]);
     })
     .catch((error) => {
       return res.status(500).json({ errorMessage: error.message });

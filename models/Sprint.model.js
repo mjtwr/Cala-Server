@@ -11,10 +11,10 @@ const SprintSchema = new Schema(
       type: String,
       enum: ["start", "in progress", "finished"],
     },
-    project:[{
+    project:{
       type: Schema.Types.ObjectId,
       ref: 'Project'
-  }],
+  },
     tasks: [
       {
         type: Schema.Types.ObjectId,
