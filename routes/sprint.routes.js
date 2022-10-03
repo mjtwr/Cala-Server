@@ -92,4 +92,29 @@ router.put("/:id/tasks", (req, res) => {
   });
 });
 
+//MOVE TASK FROM SPRINT TO BACKLOG
+
+router.delete("/:sprintId/tasks/:taskId", (req, res) => {
+  Tasks.findById(req.params.taskId).then((task) => {
+    Sprint.updateOne(
+      { _id: req.params.sprintId },
+      { $pullAll: { tasks: [{ _id: req.params.taskId }] } }
+    )
+      .then((result) => {
+        Backlog.findByIdAndUpdate(req.query.backlogId, {
+          $push: { tasks: task },
+        })
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((error) => {
+            return res.status(500).json({ errorMessage: error.message });
+          });
+      })
+      .catch((error) => {
+        return res.status(500).json({ errorMessage: error.message });
+      });
+  });
+});
+
 module.exports = router;
