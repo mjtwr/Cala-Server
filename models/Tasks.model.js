@@ -11,6 +11,10 @@ const TasksSchema = new Schema({
     enum: ["todo", "inprogress", "testing", "done"],
     default: "todo",
   },
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: "Project",
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",

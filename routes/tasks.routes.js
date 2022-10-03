@@ -44,6 +44,7 @@ router.delete("/:id", isLoggedIn, (req, res) => {
       if (task === null) {
         return res.status(404).json({ errorMessage: "Not Found" });
       }
+      
       res.json(task);
     })
     .catch((err) => {
