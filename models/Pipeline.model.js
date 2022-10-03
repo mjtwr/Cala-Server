@@ -1,19 +1,24 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const PipelineSchema = new Schema({
+const PipelineSchema = new Schema(
+  {
     sprint: {
-        type: Schema.Type.ObjectId,
-        ref: 'Sprint'
+      type: Schema.Type.ObjectId,
+      ref: "Sprint",
     },
-    cards: [{
+    cards: [
+      {
         type: Schema.Type.ObjectId,
-        ref: 'PipelineCard'
-    }]
-}, {
-    timestamps: true
-})
+        ref: "PipelineCard",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Pipeline = mongoose.model('Pipeline', PipelineSchema)
+const Pipeline = mongoose.model("Pipeline", PipelineSchema);
 
-module.exports= Pipeline
+module.exports = Pipeline;

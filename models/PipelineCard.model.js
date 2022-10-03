@@ -11,7 +11,5 @@ const PipelineCardSchema = new Schema({
   ],
 });
 
-
-
 const PipelineCard = mongoose.model("PipelineCard", PipelineCardSchema);
 module.exports = PipelineCard;

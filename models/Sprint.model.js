@@ -9,12 +9,12 @@ const SprintSchema = new Schema(
     description: String,
     status: {
       type: String,
-      enum: ["start", "in progress", "finished"],
+      enum: ["start", "inprogress", "finished"],
     },
-    project:{
+    project: {
       type: Schema.Types.ObjectId,
-      ref: 'Project'
-  },
+      ref: "Project",
+    },
     tasks: [
       {
         type: Schema.Types.ObjectId,

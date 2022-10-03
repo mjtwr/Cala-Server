@@ -6,13 +6,13 @@ const ProjectSchema = new Schema(
     title: {
       type: String,
       required: true,
-      maxLength: 25
+      maxLength: 25,
     },
     description: {
-        type: String,
-        required: true,
-        maxLength: 50
-      },
+      type: String,
+      required: true,
+      maxLength: 50,
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
