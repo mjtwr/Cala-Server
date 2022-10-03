@@ -10,7 +10,6 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const { route } = require("./projects.routes");
 const Backlog = require("../models/Backlog.model");
 
-//TODO: userid by params, errors
 
 
 //READ LIST OF TASKS
