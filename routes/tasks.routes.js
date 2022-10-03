@@ -10,6 +10,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const { route } = require("./projects.routes");
 const Backlog = require("../models/Backlog.model");
 const Project = require("../models/Project.model");
+const Sprint = require("../models/Sprint.model");
 
 //READ LIST OF TASKS
 router.get("/", isLoggedIn, (req, res) => {
@@ -49,19 +50,27 @@ router.delete("/:id", isLoggedIn, (req, res) => {
           { $pullAll: { tasks: [{ _id: task._id }] } }
         )
           .then((result) => {
-            // Sprint.find({ project: task.project})
-            // .then((sprint)=>{
-            //   Sprint.updateOne(
-            //     { _id: sprint._id },
-            //     { $pullAll: { tasks: [{ _id: task._id }] } }
-            //   )
-            res.json(result);
+            Sprint.find({ project: task.project }).then((sprints) => {
+              for (let i = 0; i < sprints.length; i++) {
+                Sprint.updateOne(
+                  { _id: sprints[i]._id },
+                  { $pullAll: { tasks: [{ _id: task._id }] } }
+                )
+                  .then((result) => {
+                    res.json(result);
+                  })
+                  .catch((error) => {
+                    return res
+                      .status(500)
+                      .json({ errorMessage: error.message });
+                  });
+              }
+            });
           })
           .catch((error) => {
             return res.status(500).json({ errorMessage: error.message });
           });
       });
-      res.json(task);
     })
     .catch((err) => {
       return res.status(500).json({ errorMessage: error.Message });

@@ -73,9 +73,10 @@ router.delete("/:id", isLoggedIn, (req, res) => {
 // ex. {{URL}}/sprints/633a6da8bb1e30a8befbae3b/tasks?backlogId=633a5db299f8acab76adb832
 router.put("/:id/tasks/", (req, res) => {
   Tasks.findById(req.body.taskId).then((task) => {
+    console.log(task);
     Sprint.findByIdAndUpdate(req.params.id, { $push: { tasks: task } })
       .then((result) => {
-        // console.log(result);
+        console.log(result);
         // sessionModel.updateOne( { _id: YOUR_SESSION_ID }, { $pull: { session_users: { user_id: YOUR_USER_ID } } } )
         Backlog.updateOne(
           { _id: req.query.backlogId },

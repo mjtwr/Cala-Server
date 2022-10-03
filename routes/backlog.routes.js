@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Backlog = require("../models/Backlog.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const Tasks = require("../models/Tasks.model");
-const Sprint = require('../models/Sprint.model')
+const Sprint = require("../models/Sprint.model");
 
 //CREATE A TASK
 router.post("/:id/tasks", isLoggedIn, (req, res) => {
@@ -12,10 +12,11 @@ router.post("/:id/tasks", isLoggedIn, (req, res) => {
     .then((task) => {
       Backlog.findByIdAndUpdate(
         { _id: req.params.id },
-        { $push: { tasks: task } }
+        { $push: { tasks: task } },
+        { new: true }
       )
         .then((result) => {
-         res.json(result)
+          res.json(result);
         })
         .catch((error) => {
           return res.status(500).json({ errorMessage: error.message });
@@ -28,6 +29,5 @@ router.post("/:id/tasks", isLoggedIn, (req, res) => {
       return res.status(500).json({ errorMessage: error.message });
     });
 });
-
 
 module.exports = router;
