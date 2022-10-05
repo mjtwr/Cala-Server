@@ -44,37 +44,11 @@ router.delete("/:id", isLoggedIn, (req, res) => {
       if (task === null) {
         return res.status(404).json({ errorMessage: "Not Found" });
       }
-      Backlog.find({ project: task.project }).then((backlog) => {
-        Backlog.updateOne(
-          { _id: backlog._id },
-          { $pullAll: { tasks: [{ _id: task._id }] } }
-        )
-          .then((result) => {
-            Sprint.find({ project: task.project }).then((sprints) => {
-              for (let i = 0; i < sprints.length; i++) {
-                Sprint.updateOne(
-                  { _id: sprints[i]._id },
-                  { $pullAll: { tasks: [{ _id: task._id }] } }
-                )
-                  .then((result) => {
-                    res.json(result);
-                  })
-                  .catch((error) => {
-                    return res
-                      .status(500)
-                      .json({ errorMessage: error.message });
-                  });
-              }
-            });
-          })
-          .catch((error) => {
-            return res.status(500).json({ errorMessage: error.message });
-          });
-      });
+      res.json({"status": "ok"})
     })
     .catch((err) => {
-      return res.status(500).json({ errorMessage: error.Message });
-    });
-});
+      return res.status(500).json({ errorMessage: error.message });
+    })
+})
 
 module.exports = router;
