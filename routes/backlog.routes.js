@@ -16,7 +16,7 @@ router.post("/:id/tasks", isLoggedIn, (req, res) => {
         { new: true }
       )
         .then((result) => {
-          res.json(result);
+          res.json(task);
         })
         .catch((error) => {
           return res.status(500).json({ errorMessage: error.message });
