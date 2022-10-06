@@ -121,5 +121,31 @@ router.delete("/:sprintId/tasks/:taskId", (req, res) => {
       });
   });
 });
+//READ LIST OF TASKS IN A SPRINT
+router.get("/:sprintId/tasks", isLoggedIn, (req, res) => {
+  Sprint.findById(req.params.sprintId)
+    .populate("tasks")
+    .then((tasks) => {
+      res.json(tasks);
+    })
+    .catch((error) => {
+      return res.status(500).json({ errorMessage: error.message });
+    });
+});
+
+//UPDATE TASK'S STATUS DRAGNDROP
+router.put("/:projectId/:sprintId/tasks/:taskId", isLoggedIn, (req, res) => {
+  const { status } = req.body;
+  Tasks.findByIdAndUpdate(req.params.taskId, { status: status })
+    .then((task) => {
+      if (task === null) {
+        return res.status(404).json({ errorMessage: "Not Found" });
+      }
+      res.json(task);
+    })
+    .catch((err) => {
+      return res.status(500).json({ errorMessage: error.message });
+    });
+});
 
 module.exports = router;
