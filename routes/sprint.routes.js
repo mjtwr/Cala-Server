@@ -134,7 +134,7 @@ router.get("/:sprintId/tasks", isLoggedIn, (req, res) => {
 });
 
 //UPDATE TASK'S STATUS DRAGNDROP
-router.put("/:projectId/:sprintId/tasks/:taskId", isLoggedIn, (req, res) => {
+router.put("/:sprintId/tasks/:taskId", isLoggedIn, (req, res) => {
   const { status } = req.body;
   Tasks.findByIdAndUpdate(req.params.taskId, { status: status })
     .then((task) => {
@@ -143,7 +143,7 @@ router.put("/:projectId/:sprintId/tasks/:taskId", isLoggedIn, (req, res) => {
       }
       res.json(task);
     })
-    .catch((err) => {
+    .catch((error) => {
       return res.status(500).json({ errorMessage: error.message });
     });
 });

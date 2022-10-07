@@ -23,6 +23,7 @@ router.get("/", isLoggedIn, (req, res) => {
     });
 });
 
+
 //UPDATE TASK
 router.put("/:id", isLoggedIn, (req, res) => {
   Tasks.findByIdAndUpdate(req.params.id, req.body)
@@ -44,11 +45,11 @@ router.delete("/:id", isLoggedIn, (req, res) => {
       if (task === null) {
         return res.status(404).json({ errorMessage: "Not Found" });
       }
-      res.json({"status": "ok"})
+      res.json({ status: "ok" });
     })
     .catch((err) => {
       return res.status(500).json({ errorMessage: error.message });
-    })
-})
+    });
+});
 
 module.exports = router;
