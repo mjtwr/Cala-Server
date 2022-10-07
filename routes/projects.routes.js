@@ -31,7 +31,6 @@ router.post("/", isLoggedIn, (req, res) => {
 
 //READ LIST OF PROJECTS
 router.get("/", isLoggedIn, (req, res) => {
-  console.log(req.user);
   Project.find({ user: req.user._id })
     .then((result) => {
       res.json(result);
