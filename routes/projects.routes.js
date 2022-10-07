@@ -31,9 +31,11 @@ router.post("/", isLoggedIn, (req, res) => {
 
 //READ LIST OF PROJECTS
 router.get("/", isLoggedIn, (req, res) => {
+  console.log("PROJECT GET  ", req.user);
   Project.find({ user: req.user._id })
     .then((result) => {
       res.json(result);
+      console.log(result);
     })
     .catch((error) => {
       return res.status(500).json({ errorMessage: error.message });

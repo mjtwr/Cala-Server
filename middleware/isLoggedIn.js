@@ -16,6 +16,7 @@ module.exports = (req, res, next) => {
       }
       // makes the user available in `req.user` from now onwards
       req.user = session.user;
+      console.log(req.user);
       next();
     })
     .catch((err) => {
